@@ -2,11 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\UsuariosController;
 
 
-Route::get('/usuario', [ClienteController::class,"ListarUsuarios"]);
-Route::get('/usuario/{d}', [ClienteController::class,"ListarUnoPorCorreo"]);
-Route::post('/usuario', [ClienteController::class,"Agregar"]);
-Route::put('/modificar', [ClienteController::class,"Modificar"]);
-Route::delete('/eliminar', [ClienteController::class,"Eliminar"]);
+Route::get('/usuario', [UsuariosController::class,"ListarUsuarios"]);
+Route::get('/usuario/{d}', [UsuariosController::class,"ListarUnoPorCorreo"]);
+Route::post('/usuario', [UsuariosController::class,"Agregar"]);
+Route::put('/modificar', [UsuariosController::class,"Modificar"]);
+Route::delete('/eliminar', [UsuariosController::class,"Eliminar"]);
