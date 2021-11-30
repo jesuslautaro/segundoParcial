@@ -2,11 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LibroController;
+use App\Http\Controllers\ProductosController;
 
 
-Route::get('/libro', [LibroController::class,"Listar"]);
-Route::get('/libro/{d}', [LibroController::class,"ListarUno"]);
-Route::post('/agregar', [LibroController::class,"Agregar"]);
-Route::post('/modificar', [LibroController::class,"Modificar"]);
-Route::post('/eliminar', [LibroController::class,"Eliminar"]);
+Route::get('/producto', [ProductosController::class,"ListarProductos"]);
+Route::get('/producto/{d}', [ProductosController::class,"ListarUno"]);
+Route::post('/agregar', [ProductosController::class,"Agregar"]);
+Route::put('/modificar', [ProductosController::class,"Modificar"]);
+Route::delete('/eliminar', [ProductosController::class,"Eliminar"]);
+Route::put('/stock', [ProductosController::class,"BajarStock"]);
