@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 
-class SocioController extends Controller
+class ClienteController extends Controller
 {
-    public function ListarClientes(Request $request){
-        $socios = Clientes::all();
-        return $socios;
+    public function ListarUsuarios(Request $request){
+        $usuarios = Clientes::all();
+        return $usuarios;
     }
 
 
@@ -34,7 +34,7 @@ class SocioController extends Controller
 
         $respuesta = array(
             "resultado" => "OK",
-            "mensaje" => "Usuario Agregado correctamente"
+            "mensaje" => "Cliente Agregado correctamente"
         );
 
         return $respuesta;
@@ -53,7 +53,7 @@ class SocioController extends Controller
 
         $respuesta = array(
             "resultado" => "OK",
-            "mensaje" => "Usuario Modificado correctamente"
+            "mensaje" => "Cliente Modificado correctamente"
         );
         return $respuesta;
     }
