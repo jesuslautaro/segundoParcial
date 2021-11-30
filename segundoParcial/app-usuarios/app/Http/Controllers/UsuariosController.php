@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Clientes;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
-
-class ClienteController extends Controller
+class UsuariosController extends Controller
 {
     public function ListarUsuarios(Request $request){
         $usuarios = Clientes::all();
@@ -17,8 +14,8 @@ class ClienteController extends Controller
 
 
     public function ListarUnoPorCorreo($correo){
-        $usuario = Clientes::where('correo',$correo) ->first();
-        return $usuario;
+        $usuarios = Clientes::where('correo',$correo) ->first();
+        return $usuarios;
     }
 
 
