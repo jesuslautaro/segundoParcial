@@ -1,0 +1,103 @@
+version: '2'
+
+services:
+  mariadb-libros:
+    image: docker.io/bitnami/mariadb:10.2
+    environment:
+      - MARIADB_DATABASE=libros
+      - MARIADB_ROOT_PASSWORD=password
+    volumes:
+      - ./app-libros/mysql:/var/lib/mysql
+
+  mariadb-prestamos:
+    image: docker.io/bitnami/mariadb:10.2
+    environment:
+      - MARIADB_DATABASE=prestamos
+      - MARIADB_ROOT_PASSWORD=password
+    volumes:
+      - ./app-prestamos/mysql:/var/lib/mysql
+
+  mariadb-socios:
+    image: docker.io/bitnami/mariadb:10.2
+    environment:
+      - MARIADB_DATABASE=socio
+      - MARIADB_ROOT_PASSWORD=password
+    volumes:
+      - ./app-socios/mysql:/var/lib/mysql
+
+  mariadb-frontend:
+    image: docker.io/bitnami/mariadb:10.2
+    environment:
+      - MARIADB_DATABASE=frontend
+      - MARIADB_ROOT_PASSWORD=password
+    volumes:
+      - ./app-socios/mysql:/var/lib/mysql
+
+
+  app-libros:
+    tty: true
+    restart: unless-stopped
+    image: docker.io/bitnami/laravel:8
+    environment:
+      - DB_HOST=mariadb-libros
+      - DB_USERNAME=root
+      - DB_DATABASE=libros
+      - DB_PASSWORD=password
+    depends_on:
+      - mariadb-libros
+    ports:
+      - 3000:3000
+    volumes:
+      - ./app-libros:/app
+
+  app-prestamos:
+    tty: true
+    restart: unless-stopped
+    image: docker.io/bitnami/laravel:8
+    environment:
+      - DB_HOST=mariadb-prestamos
+      - DB_USERNAME=root
+      - DB_DATABASE=prestamos
+      - DB_PASSWORD=password
+      - APP_LIBROS_URL=http://app-libros:3000/api/
+      - APP_SOCIOS_URL=http://app-socios:3000/api/
+    depends_on:
+      - mariadb-prestamos
+    ports:
+      - 3001:3000
+    volumes:
+      - ./app-prestamos:/app
+
+  app-socios:
+    tty: true
+    restart: unless-stopped
+    image: docker.io/bitnami/laravel:8
+    environment:
+      - DB_HOST=mariadb-socios
+      - DB_USERNAME=root
+      - DB_DATABASE=socio
+      - DB_PASSWORD=password
+    depends_on:
+      - mariadb-socios
+    ports:
+      - 3002:3000
+    volumes:
+      - ./app-socios:/app
+
+
+  app-frontend:
+    tty: true
+    restart: unless-stopped
+    image: docker.io/bitnami/laravel:8
+    environment:
+      - DB_HOST=mariadb-frontend
+      - DB_USERNAME=root
+      - DB_DATABASE=frontend
+      - DB_PASSWORD=password
+      - APP_LIBROS_URL=http://app-libros:3000/api/
+      - APP_SOCIOS_URL=http://app-socios:3000/api/
+      - APP_PRESTAMOS_URL=http://app-prestamos:3000/api/
+    ports:
+      - 3003:3000
+    volumes:
+      - ./app-frontend:/app
