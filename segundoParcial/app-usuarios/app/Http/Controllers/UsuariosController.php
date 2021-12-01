@@ -31,7 +31,7 @@ class UsuariosController extends Controller
 
         $respuesta = array(
             "resultado" => "OK",
-            "mensaje" => "Cliente Agregado correctamente"
+            "mensaje" => "Usuario agregado correctamente"
         );
 
         return $respuesta;
@@ -50,7 +50,7 @@ class UsuariosController extends Controller
 
         $respuesta = array(
             "resultado" => "OK",
-            "mensaje" => "Cliente Modificado correctamente"
+            "mensaje" => "Usuario modificado correctamente"
         );
         return $respuesta;
     }
@@ -61,7 +61,7 @@ class UsuariosController extends Controller
 
         $respuesta = array(
             "resultado" => "OK",
-            "mensaje" => "Cliente eliminado correctamente"
+            "mensaje" => "Usuario eliminado correctamente"
         );
         return $respuesta;
     }
