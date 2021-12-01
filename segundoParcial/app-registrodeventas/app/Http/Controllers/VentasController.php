@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Reserva;
+use App\Models\Ventas;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -11,22 +11,22 @@ use Illuminate\Support\Facades\Http;
 
 
 
-class ReservaController extends Controller
+class VentasController extends Controller
 {
-    private function obtenerDatosSocio($id_socio){
-        $socios = Http::get(getenv("APP_SOCIOS_URL") . "socio") -> json();
-        foreach($socios as $socio){
-            if($id_socio == $socio['id']){
-                return array('nombre' => $socio['nombre'], 'apellido' => $socio['apellido']);
+    private function obtenerDatosUsuario($id_usuario){
+        $socios = Http::get(getenv("APP_USUARIOS_URL") . "usuario") -> json();
+        foreach($usuarios as $usuario){
+            if($id_usuario == $usuario['id']){
+                return array('nombre' => $usuario['nombre'], 'apellido' => $usuario['apellido']);
             }
         }
     }
 
-    private function obtenerTituloLibro($id_libro){
-        $libros = Http::get(getenv("APP_LIBROS_URL") . "libro") -> json();
-        foreach($libros as $libro){
-            if($id_libro == $libro['id']){
-                return $libro['titulo'];
+    private function obtenerDatosProducto($id_producto){
+        $productos = Http::get(getenv("APP_PRODUCTOS_URL") . "producto") -> json();
+        foreach($productos as $producto){
+            if($id_producto == $producto['id']){
+                return array('nombre' =>$producto['nombre'], 'stock' => $producto['stock']);
             }
         }
     }
