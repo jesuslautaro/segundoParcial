@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Http;
 class VentasController extends Controller
 {
     private function obtenerDatosUsuario($id_usuario){
-        $socios = Http::get(getenv("APP_USUARIOS_URL") . "usuario") -> json();
+        $usuarios = Http::get(getenv("APP_USUARIOS_URL") . "usuario") -> json();
         foreach($usuarios as $usuario){
             if($id_usuario == $usuario['id']){
                 return array('nombre' => $usuario['nombre'], 'apellido' => $usuario['apellido']);
@@ -31,80 +31,98 @@ class VentasController extends Controller
         }
     }
 
-    private function obtenerDatosDeReservas($reservas){
-        $reservasConDatosCompletos = [];
-        foreach($reservas as $r){
-            $datosSocio = $this -> obtenerDatosSocio($r -> id_socio);
-            $titulo = $this -> obtenerTituloLibro($r -> id_libro);
+    private function obtenerDatosDeVentas($ventas){
+        $ventasConDatosCompletos = [];
+        foreach($ventas as $r){
+            $datosUsuario = $this -> obtenerDatosUsuario($r ->id_usuario);
+            $datosProducto = $this -> obtenerDatosProducto($r ->id_producto);
 
             $fila = [
-                'id_reserva' => $r->id,
-                'id_socio' => $r->id_socio,
-                'id_libro' => $r->id_libro,
-                'titulo' => $titulo,
-                'nombre_socio' => $datosSocio['nombre'],
-                'apellido_socio' => $datosSocio['apellido'],
+                'id' => $r->id,
+                'id_usuario' => $r->id_usuario,
+                'id_producto' => $r->id_producto,
+                'nombre_producto' =>$datosProducto['nombre'],
+                'stock' =>$datosProducto['stock'],
+                'nombre' =>$datosUsuario['nombre'],
+                'apellido' =>$datosUsuario['apellido'],
 
             ];
-            array_push($reservasConDatosCompletos,$fila);
+            array_push($ventasConDatosCompletos,$fila);
         }
-        return $reservasConDatosCompletos;
+        return $ventasConDatosCompletos;
+
     }
+
 
     public function Listar(Request $request){
-        $reservas = Reserva::all();        
-        return $this -> obtenerDatosDeReservas($reservas);
+        $ventas = Ventas::all();        
+        return $this -> obtenerDatosDeVentas($ventas);
     }
 
+    public function ListarUno(Request $request, $idProducto){
+        $venta = Ventas::where('id',$idProducto) ->first();
+        return $venta;
+    }
+
+
     public function Agregar(Request $request){
-        $r = new Reserva();
-        $r -> id_socio = $request -> post('id_socio');
-        $r -> id_libro = $request -> post('id_libro');
-        $r -> devolucion = "2021-11-05"; // Imaginen que le sumo 30 dias a la fecha actual
-        $r -> devuelto = false;
+        $r = new Ventas();
+        $r -> id_usuario = $request -> post('id_usuario');
+        $r -> id_producto = $request -> post('id_producto');
+        $r -> stock = $request -> post('stock');
 
         $r -> save();
 
         $respuesta = array(
             "resultado" => "OK",
-            "mensaje" => "Reserva insertado correctamente"
+            "mensaje" => "Compra hecha correctamente"
         );
 
+        return $BajarStock($request);
+    }
+
+    public function BajarStock(Request $request){
+        $bajaStock = Http::put(getenv("APP_PRODUCTOS_URL") . "stock", 
+        [
+            'id' => $request -> post('id_producto'),
+            'stock' => $request -> post('stock'),
+        ]) -> json();
+
+        $respuesta = array(
+            "resultado" => "OK",
+            "mensaje" => "Realizado"
+        );
         return $respuesta;
     }
 
     public function Modificar(Request $request){
-        $l = Reserva::where('id',$request -> post('id')) ->first();
+        $l = Ventas::where('id',$request -> post('id')) ->first();
 
-        $l -> titulo = $request -> post('titulo');
-        $l -> anio = $request -> post('anio');
-        $l -> autor = $request -> post('autor');
-        $l -> editorial = $request -> post('editorial');
-        $l -> genero = $request -> post('genero');
+        $l -> id_usuario = $request -> post('id_usuario');
+        $l -> id_producto = $request -> post('id_producto');
+        $l -> stock = $request -> post('stock');
 
         $l -> save();
 
         $respuesta = array(
             "resultado" => "OK",
-            "mensaje" => "Reserva Modificado correctamente"
+            "mensaje" => "Compra modificada correctamente"
         );
         return $respuesta;
     }
 
+
     public function Eliminar(Request $request){
-        $l = Reserva::where('id',$request -> post('id')) ->first();
+        $l = Ventas::where('id',$request -> post('id')) ->first();
         $l -> delete();
 
         $respuesta = array(
             "resultado" => "OK",
-            "mensaje" => "Reserva Eliminado correctamente"
+            "mensaje" => "Compra eliminada correctamente"
         );
         return $respuesta;
     }
 
 
-    public function ListarLibros(Request $request){
-        $response = Http::get(getenv("APP_LIBROS_URL") . "libro");
-        return $response;
-    }
+
 }
