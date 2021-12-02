@@ -78,7 +78,7 @@ class VentasController extends Controller
             "mensaje" => "Compra hecha correctamente"
         );
 
-        return $BajarStock($request);
+        return $this->BajarStock($request);
     }
 
     public function BajarStock(Request $request){
