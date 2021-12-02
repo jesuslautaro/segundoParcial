@@ -6,10 +6,10 @@ use App\Http\Controllers\VentasController;
 
 
 Route::prefix('reserva')->group(function () {
-    Route::get('/', [VentasController::class,"Listar"]);
-    Route::get('/', [VentasController::class,"ListarUno"]);
-    Route::post('/', [VentasController::class,"Agregar"]);
-    Route::put('/', [VentasController::class,"Modificar"]);
-    Route::delete('/', [VentasController::class,"Eliminar"]);
+    Route::get('/venta', [VentasController::class,"Listar"]);
+    Route::get('/venta/{d}', [VentasController::class,"ListarUno"]);
+    Route::post('/venta', [VentasController::class,"Agregar"]);
+    Route::put('/venta', [VentasController::class,"Modificar"]);
+    Route::delete('/venta', [VentasController::class,"Eliminar"]);
 });
 
