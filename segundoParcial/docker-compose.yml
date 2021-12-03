@@ -1,15 +1,15 @@
 version: '2'
 
 services:
-   mariadb-clientes:
+  mariadb-usuarios:
     image: docker.io/bitnami/mariadb:10.2
     environment:
       - MARIADB_DATABASE=cliente
       - MARIADB_ROOT_PASSWORD=cliente
     volumes:
-      - ./app-clientes/mysql:/var/lib/mysql
+      - ./app-usuarios/mysql:/var/lib/mysql
 
-    mariadb-frontend:
+  mariadb-frontend:
     image: docker.io/bitnami/mariadb:10.2
     environment:
       - MARIADB_DATABASE=frontend
@@ -67,21 +67,21 @@ services:
     volumes:
       - ./app-registrodeventas:/app
 
-  app-clientes:
+  app-usuarios:
     tty: true
     restart: unless-stopped
     image: docker.io/bitnami/laravel:8
     environment:
-      - DB_HOST=mariadb-clientes
+      - DB_HOST=mariadb-usuarios
       - DB_USERNAME=root
       - DB_DATABASE=cliente
       - DB_PASSWORD=cliente
     depends_on:
-      - mariadb-clientes
+      - mariadb-usuarios
     ports:
       - 3002:3000
     volumes:
-      - ./app-clientes:/app
+      - ./app-usuarios:/app
 
   app-frontend:
     tty: true
@@ -94,7 +94,7 @@ services:
       - DB_PASSWORD=frontend
       - APP_AUTENTICACION_URL=http://app-autenticacion:3000/api/
       - APP_PRODUCTOS_URL=http://app-productos:3000/api/
-      - APP_CLIENTES_URL=http://app-clientes:3000/api/
+      - APP_USUARIOS_URL=http://app-usuarios:3000/api/
       - APP_REGISTRO_URL=http://app-registrodeventas:3000/api/
     ports:
       - 3003:3000
