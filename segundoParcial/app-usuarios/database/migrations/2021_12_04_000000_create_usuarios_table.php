@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePersonalAccessTokensTables extends Migration
+class CreateUsuariosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreatePersonalAccessTokensTables extends Migration
      */
     public function up()
     {
-        Schema::create('productos', function (Blueprint $table) {
+        Schema::create('usuarios', function (Blueprint $table) {
             $table->id();
             $table->string("nombre");
-            $table->string("descripcion");
-            $table->integer("stock");
-            $table->timestamps();
+            $table->string("apellido");
+            $table->string("telefono");
+            $table->string("correo");
+            $table->boolean("tipo");
             $table->softDeletes();
-
+            $table->timestamps();
         });
     }
 
@@ -31,6 +32,6 @@ class CreatePersonalAccessTokensTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('productos');
+        Schema::dropIfExists('usuarios');
     }
 }
