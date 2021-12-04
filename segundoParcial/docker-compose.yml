@@ -4,8 +4,8 @@ services:
   mariadb-usuarios:
     image: docker.io/bitnami/mariadb:10.2
     environment:
-      - MARIADB_DATABASE=cliente
-      - MARIADB_ROOT_PASSWORD=cliente
+      - MARIADB_DATABASE=usuarios
+      - MARIADB_ROOT_PASSWORD=usuarios
     volumes:
       - ./app-usuarios/mysql:/var/lib/mysql
 
@@ -15,7 +15,7 @@ services:
       - MARIADB_DATABASE=frontend
       - MARIADB_ROOT_PASSWORD=frontend
     volumes:
-      - ./app-clientes/mysql:/var/lib/mysql
+      - ./app-frontend/mysql:/var/lib/mysql
 
   mariadb-productos:
     image: docker.io/bitnami/mariadb:10.2
@@ -59,7 +59,7 @@ services:
       - DB_DATABASE=registrodeventas
       - DB_PASSWORD=registrodeventas
       - APP_PRODUCTOS_URL=http://app-productos:3000/api/
-      - APP_CLIENTES_URL=http://app-clientes:3000/api/
+      - APP_USUARIOS_URL=http://app-usuarios:3000/api/
     depends_on:
       - mariadb-registrodeventas
     ports:
@@ -74,8 +74,8 @@ services:
     environment:
       - DB_HOST=mariadb-usuarios
       - DB_USERNAME=root
-      - DB_DATABASE=cliente
-      - DB_PASSWORD=cliente
+      - DB_DATABASE=usuarios
+      - DB_PASSWORD=usuarios
     depends_on:
       - mariadb-usuarios
     ports:
@@ -92,10 +92,9 @@ services:
       - DB_USERNAME=root
       - DB_DATABASE=frontend
       - DB_PASSWORD=frontend
-      - APP_AUTENTICACION_URL=http://app-autenticacion:3000/api/
       - APP_PRODUCTOS_URL=http://app-productos:3000/api/
       - APP_USUARIOS_URL=http://app-usuarios:3000/api/
-      - APP_REGISTRO_URL=http://app-registrodeventas:3000/api/
+      - APP_REGISTRODEVENTAS_URL=http://app-registrodeventas:3000/api/
     ports:
       - 3003:3000
     volumes:
