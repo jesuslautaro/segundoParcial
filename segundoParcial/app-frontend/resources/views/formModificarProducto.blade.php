@@ -7,14 +7,14 @@
     <title>Producto</title>
 </head>
 <body>
-    <h1>Modificar Productos</h1>
+    <h1>Modificar producto</h1>
 
     @isset($exito)
-        <div style="color: #000000">Producto modificado correctamente</div>
+        <div style="color: #00FF00">Producto modificado correctamente</div>
     @endisset
     <form action="/modificarProductos" method="post">
         @csrf
-        Id: <input type="text" name="id"><br />
+        Id del producto: <input type="text" name="id"><br />
         Nombre: <input type="text" name="nombre"><br />
         Descripcion: <input type="text" name="descripcion"><br />
         Stock: <input type="text" name="stock"><br />
