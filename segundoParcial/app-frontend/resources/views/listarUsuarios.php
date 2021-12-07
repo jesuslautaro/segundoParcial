@@ -7,17 +7,15 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Socios</h1>
+    <h1>Usuarios</h1>
 
     
-    @foreach($socios as $s)
-        ID: {{ $s["id"] }} <br />
-        Nombre: {{ $s["nombre"] }} <br />
-        Apellido: {{ $s["apellido"] }} <br />
-        Telefono: {{ $s["telefono"] }} <br />
-        Correo: {{ $s["correo"] }} <br />
-        Fecha Nacimiento: {{ $s["fecha_nacimiento"] }} <br />
-
+    @foreach($usuarios as $u)
+        Id del usuario: {{ $u["id"] }} <br />
+        Correo: {{ $u["correo"] }} <br />
+        Nombre: {{ $u["nombre"] }} <br />
+        Apellido: {{ $u["apellido"] }} <br />
+        Telefono: {{ $u["telefono"] }} <br />
         <br />
     @endforeach
 </body>
