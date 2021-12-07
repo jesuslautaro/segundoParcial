@@ -7,10 +7,10 @@
     <title>Producto</title>
 </head>
 <body>
-    <h1>Eliminar Producto</h1>  
+    <h1>Eliminar producto</h1>  
 
     @isset($exito)
-        <div style="color: #000000">Producto Eliminado correctamente</div>
+        <div style="color: #00FF00">Producto eliminado correctamente</div>
     @endisset
     <form action="/eliminarProductos" method="post">
         @csrf

@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Producto</title>
+    <title>Usuarios</title>
 </head>
 <body>
-    <h1>Eliminar Producto</h1>  
+    <h1>Eliminar usuarios</h1>  
 
     @isset($exito)
-        <div style="color: #000000">Producto Eliminado correctamente</div>
+        <div style="color: #00FF00">Usuario eliminado correctamente</div>
     @endisset
-    <form action="/eliminarProductos" method="post">
+    <form action="/eliminarUsuario" method="post">
         @csrf
-        Id: <input type="text" name="id"><br />
+        Id del usuario: <input type="text" name="id"><br />
         <input type="submit" value="Enviar">
     </form>
 </body>
