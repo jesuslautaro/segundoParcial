@@ -7,18 +7,16 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Agregar socio</h1>  
+    <h1>Agregar producto</h1>  
 
     @isset($exito)
-        <div style="color: #00FF00">Socio agregado correctamente</div>
+        <div style="color: #00FF00">Producto agregado correctamente</div>
     @endisset
-    <form action="/agregarSocio" method="post">
+    <form action="/agregarProductos" method="post">
         @csrf
         Nombre: <input type="text" name="nombre"><br />
-        Apellido: <input type="text" name="apellido"><br />
-        Telefono: <input type="text" name="telefono"><br />
-        Correo: <input type="text" name="correo"><br />
-        Fecha Nacimiento: <input type="text" name="fecha_nacimiento"><br />
+        Descripcion: <input type="text" name="descripcion"><br />
+        Stock: <input type="text" name="stock"><br />
         <input type="submit" value="Enviar">
     </form>
 </body>
