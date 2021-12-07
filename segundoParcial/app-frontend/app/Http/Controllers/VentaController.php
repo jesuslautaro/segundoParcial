@@ -7,26 +7,54 @@ use Illuminate\Support\Facades\Http;
 
 
 
-class SocioController extends Controller
+class VentaController extends Controller
 {
-    public function ListarSocios(Request $request){
-        $socios = Http::get(getenv("APP_SOCIOS_URL") . "socio") -> json();
-        return view('listaSocios',["socios" => $socios]);
+    public function Listar(Request $request){
+        $ventas = Http::get(getenv("APP_REGISTRODEVENTAS_URL") . "venta") -> json();
+        return view('listarVentas',["ventas" => $ventas]);
     }
 
-    public function AgregarSocio(Request $request){
-        $response = Http::put(getenv("APP_SOCIOS_URL") . "socio", [
-            'nombre' => $request -> post('nombre'),
-            'apellido' => $request -> post('apellido'),
-            'telefono' => $request -> post('telefono'),
-            'correo' => $request -> post('correo'),
-            'fecha_nacimiento' => $request -> post('fecha_nacimiento')
+    public function Agregar(Request $request){
+        $response = Http::put(getenv("APP_REGISTRODEVENTAS_URL") . "venta", [
+            'id_producto' => $request -> post('id_producto'),
+            'id_usuario' => $request -> post('id_usuario'),
+            'stock' => $request->post('stock'),
         ]) -> json();
 
         if($response["resultado"] === "OK")
-            return view('formAgregarSocio',["exito" => true]);
-        //else 
-            // Procesar errors
+            return view('formAgregarVenta',["exito" => true]);
+        else {
+            return "Error";
+        }
+            
     }
 
+    public function Modificar(Request $request){
+        $response = Http::post(getenv('APP_REGISTRODEVENTAS_URL') . "venta" , [
+            'id' => $request->post('id'),
+            'id_usuario' => $request->post('id_usuario'),
+            'id_producto' => $request->post('id_producto'),
+            'stock' => $request->post('stock')
+      ])-> json();
+
+        if($response["resultado"] === "OK")
+            return view('formModificarVentas' , ["exito" => true]);
+        else {
+                return "Error";
+            }    
+        }
+
+    public function Eliminar(Request $request){
+        $response = Http::post(getenv("APP_REGISTRODEVENTAS_URL") . "eliminar", [
+            'id' => $request -> post('id'),
+            ]) -> json();
+            
+            if($response["resultado"]=== "OK")
+                return view('formEliminarVenta',["exito" => true]);
+            else {
+                return "ERROR";
+        }
+    }    
+
+    
 }
