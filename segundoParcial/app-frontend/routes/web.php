@@ -7,8 +7,26 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\VentaController;
 
 
-Route::get('/listarSocios', [SocioController::class,"ListarSocios"]);
-Route::get('/agregarSocio', function () {
-    return view('formAgregarSocio');
+Route::get('/listarUsuarios', [UsuarioController::class,"ListarUsuarios"]);
+
+Route::get('/registroCliente', function () {
+    return view('formAgregarCliente');
 });
-Route::post('/agregarSocio', [SocioController::class,"AgregarSocio"]);
+Route::post('/registroCliente', [UsuarioController::class,"AgregarUsuario"]);
+
+Route::get('/registroVendedor', function () {
+    return view('formAgregarVendedor');
+});
+Route::post('/registroVendedor', [UsuarioController::class,"AgregarUsuario"]);
+
+Route::get('/modificarUsuario', function () {
+    return view('formModificarUsuarios');
+});
+Route::post('/modificarUsuario', [UsuarioController::class,"ModificarUsuario"]);
+
+Route::get('/eliminarUsuario', function () {
+    return view('formEliminarUsuarios');
+});
+Route::post('/eliminarUsuario', [UsuarioController::class,"EliminarUsuario"]);
+
+

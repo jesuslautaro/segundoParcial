@@ -11,11 +11,10 @@ class UsuarioController extends Controller
 {
     public function AgregarUsuario(Request $request, $tipo){
         $response = Http::post(getenv("APP_USUARIOS_URL") . "usuario", [
+            'correo' => $request -> post('correo'),
             'nombre' => $request -> post('nombre'),
             'apellido' => $request -> post('apellido'),
             'telefono' => $request -> post('telefono'),
-            'correo' => $request -> post('correo'),
-            'tipo' => $tipo
         ]) -> json();
         if(isset($response["resultado"]))
             return true;
