@@ -30,3 +30,19 @@ Route::get('/eliminarUsuario', function () {
 Route::post('/eliminarUsuario', [UsuarioController::class,"EliminarUsuario"]);
 
 
+
+Route::get('/listarProductos', [ProductoController::class,"ListarProductos"]);
+Route::get('/agregarProductos', function () {
+    return view('formAgregarProducto');
+});
+Route::get('/modificarProductos', function () {
+    return view('formModificarProducto');
+});
+Route::post('/agregarProductos', [ProductoController::class,"AgregarProducto"]);
+Route::post('/modificarProductos', [ProductoController::class,"ModificarProducto"]);
+Route::get('/eliminarProductos', function () {
+    return view('formEliminarProducto');
+});
+Route::post('/eliminarProductos', [ProductoController::class,"EliminarProducto"]);
+
+
