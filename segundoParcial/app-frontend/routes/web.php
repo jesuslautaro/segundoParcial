@@ -45,4 +45,17 @@ Route::get('/eliminarProductos', function () {
 });
 Route::post('/eliminarProductos', [ProductoController::class,"EliminarProducto"]);
 
+Route::get('/listarVentas', [VentaController::class,"Listar"]);
 
+Route::post('/agregarVenta', [VentaController::class,"Agregar"]);
+Route::post('/modificarVenta', [VentaController::class,"Modificar"]);
+Route::get('/agregarVenta', function () {
+    return view('formAgregarVenta');
+});
+Route::get('/modificarVenta', function () {
+    return view('formModificarVentas');
+});
+Route::post('/eliminarVenta', [VentaController::class,"Eliminar"]);
+Route::get('/eliminarVenta', function () {
+    return view('formEliminarVenta');
+});
